@@ -34,7 +34,9 @@ const AppProvider = ({ children }) => {
 
         const authors = await fetchAuthorsInfo(uniqueAuthorIds);
 
-        setTenStories(tenStories);
+        setTenStories(
+          tenStories.sort((storyA, stroyB) => storyA.score - stroyB.score)
+        );
         setAuthors(authors);
         setLoading(false);
       } catch (err) {
