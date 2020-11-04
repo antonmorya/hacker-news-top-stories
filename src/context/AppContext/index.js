@@ -9,39 +9,48 @@ const AppProvider = ({ children }) => {
   const [isLoading, setLoading] = useState(false);
   const [authors, setAuthors] = useState({});
   const [tenStories, setTenStories] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
-      const stories = await fetchTopStories();
-      const storiesCount = stories.length;
-      const storiesIndexesToFetch = new Set();
+      try {
+        setLoading(true);
+        const stories = await fetchTopStories();
+        const storiesCount = stories.length;
+        const storiesIndexesToFetch = new Set();
 
-      do {
-        storiesIndexesToFetch.add(randomInRange(0, storiesCount));
-      } while (storiesIndexesToFetch.size < 10);
+        do {
+          storiesIndexesToFetch.add(randomInRange(0, storiesCount));
+        } while (storiesIndexesToFetch.size < 10);
 
-      const storiesIdsToFetch = [...storiesIndexesToFetch].map(
-        (storyIndex) => stories[storyIndex]
-      );
+        const storiesIdsToFetch = [...storiesIndexesToFetch].map(
+          (storyIndex) => stories[storyIndex]
+        );
 
-      const tenStories = await fetchStoriesInfo(storiesIdsToFetch);
-      const authorIds = tenStories.map(({ by }) => by);
+        const tenStories = await fetchStoriesInfo(storiesIdsToFetch);
+        const authorIds = tenStories.map(({ by }) => by);
 
-      const uniqueAuthorIds = unique(authorIds);
+        const uniqueAuthorIds = unique(authorIds);
 
-      const authors = await fetchAuthorsInfo(uniqueAuthorIds);
+        const authors = await fetchAuthorsInfo(uniqueAuthorIds);
 
-      setTenStories(tenStories);
-      setAuthors(authors);
-      setLoading(false);
+        setTenStories(tenStories);
+        setAuthors(authors);
+        setLoading(false);
+      } catch (err) {
+        console.error(error);
+
+        setError("Fatal error, dude");
+      }
     };
 
     fetchData();
   }, []);
 
   return (
-    <Provider value={{ isLoading, authors, tenStories }}>{children}</Provider>
+    <Provider value={{ isLoading, authors, tenStories, error }}>
+      {children}
+    </Provider>
   );
 };
 

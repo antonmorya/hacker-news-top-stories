@@ -1,10 +1,20 @@
 import { useContext } from "react";
 import { AppContext } from "../../context/AppContext";
-import { Container, Grid, Loader, Dimmer } from "semantic-ui-react";
+import { Container, Grid, Loader, Dimmer, Message } from "semantic-ui-react";
 import storyCard from "../StoryCard";
 
 const StoriesList = () => {
-  const { isLoading, authors, tenStories } = useContext(AppContext);
+  const { isLoading, authors, tenStories, error } = useContext(AppContext);
+
+  if (error) {
+    return (
+      <Container fluid>
+        <Grid centered padded>
+          <Message color="red">{error}</Message>
+        </Grid>
+      </Container>
+    );
+  }
 
   const renderCards = () =>
     tenStories.map(({ by, ...story }) =>

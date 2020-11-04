@@ -56,4 +56,19 @@ StoryCard.propTypes = {
   }),
 };
 
+StoryCard.defaultProps = {
+  author: {
+    karma: 0,
+  },
+  story: PropTypes.shape({
+    by: "",
+    id: 0,
+    score: 0,
+    time: 0,
+    title: "",
+    type: "",
+    url: "",
+  }),
+};
+
 export default StoryCard;

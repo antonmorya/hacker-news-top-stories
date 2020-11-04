@@ -15,7 +15,10 @@ const fetchTopStories = async () => {
 
     return response.json();
   } catch (error) {
-    alert("fatal error, dude!");
+    console.error("fetchTopStories: fatal error, dude!");
+
+    // don't do like that
+    return [];
   }
 };
 
@@ -33,7 +36,9 @@ const fetchStoriesInfo = async (storiesIds) => {
       .then((responses) => responses)
       .then((responses) => Promise.all(responses.map((r) => r.json())));
   } catch (error) {
-    alert("fetchStoriesInfo: fatal error, dude!");
+    console.error("fetchStoriesInfo: fatal error, dude!");
+
+    return [];
   }
 };
 
@@ -65,7 +70,9 @@ const fetchAuthorsInfo = async (authorIds) => {
         }, {})
       );
   } catch (error) {
-    alert("fetchStoriesInfo: fatal error, dude!");
+    console.error("fetchAuthorsInfo: fatal error, dude!");
+
+    return {};
   }
 };
 
