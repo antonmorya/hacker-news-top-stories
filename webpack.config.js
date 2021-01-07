@@ -1,6 +1,7 @@
 const webpack = require("webpack");
 const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+var HtmlWebpackPlugin = require("html-webpack-plugin");
 
 const config = {
   entry: ["react-hot-loader/patch", "./src/index.tsx"],
@@ -37,21 +38,10 @@ const config = {
         use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
       },
       {
-        test: /\.png$/,
+        test: /\.(ttf|eot|svg|otf|gif|png|ttf|woff|woff2)$/,
         use: [
           {
             loader: "url-loader",
-            options: {
-              mimetype: "image/png",
-            },
-          },
-        ],
-      },
-      {
-        test: /\.(ttf|eot|svg|otf|gif|ttf|woff|woff2)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        use: [
-          {
-            loader: "file-loader",
           },
         ],
       },
@@ -65,10 +55,23 @@ const config = {
   },
   devServer: {
     contentBase: "./dist",
-    // compress: true,
+    compress: true,
     port: 3000,
   },
-  plugins: [new MiniCssExtractPlugin()],
+  plugins: [
+    new MiniCssExtractPlugin(),
+    new HtmlWebpackPlugin({
+      title: "Typescript pet",
+      filename: "index.html",
+      templateContent: `
+        <html>
+          <body>
+          <div id="root"></div>
+          </body>
+        </html>
+      `,
+    }),
+  ],
 };
 
 module.exports = config;

@@ -1,3 +1,4 @@
+import * as React from "react";
 import PropTypes from "prop-types";
 import { Card, Icon, Grid } from "semantic-ui-react";
 

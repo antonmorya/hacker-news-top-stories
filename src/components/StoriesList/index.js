@@ -1,10 +1,12 @@
-import { useContext } from "react";
+import * as React from "react";
 import { AppContext } from "../../context/AppContext";
 import { Container, Grid, Loader, Dimmer, Message } from "semantic-ui-react";
 import storyCard from "../StoryCard";
 
 const StoriesList = () => {
-  const { isLoading, authors, tenStories, error } = useContext(AppContext);
+  const { isLoading, authors, tenStories, error } = React.useContext(
+    AppContext
+  );
 
   if (error) {
     return (
