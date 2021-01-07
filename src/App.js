@@ -10,6 +10,7 @@ const App = () => (
   <AppProvider>
     <div className="App">
       <header className="App-header">
+        <h1>Hello eee</h1>
         <StoriesList />
       </header>
     </div>

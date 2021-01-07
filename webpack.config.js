@@ -57,6 +57,7 @@ const config = {
     contentBase: "./dist",
     compress: true,
     port: 3000,
+    inline: true,
   },
   plugins: [
     new MiniCssExtractPlugin(),
