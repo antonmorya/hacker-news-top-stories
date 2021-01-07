@@ -1,5 +1,5 @@
 import "semantic-ui-css/semantic.min.css";
-import "./App.css";
+import "./App.scss";
 
 import { AppProvider } from "./context/AppContext";
 import StoriesList from "./components/StoriesList";
