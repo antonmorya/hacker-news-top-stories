@@ -9,7 +9,11 @@
     "moduleResolution": "node",
     "target": "es5",
     "allowJs": true,
-    "jsx": "react"
+    "jsx": "react",
+    "removeComments": true,
+    "allowSyntheticDefaultImports": true,
+    "downlevelIteration": true
   },
-  "include": ["./src/**/*"]
+  "include": ["./src/**/*"],
+  "exclude": ["node_modules"]
 }

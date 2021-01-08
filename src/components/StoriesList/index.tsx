@@ -3,10 +3,19 @@ import { AppContext } from "../../context/AppContext";
 import { Container, Grid, Loader, Dimmer, Message } from "semantic-ui-react";
 import storyCard from "../StoryCard";
 
+import {
+  AppContextInterface,
+  SingleStoryByField,
+  SingleStoryEntry,
+} from "../../helpers/interfaces";
+
 const StoriesList = () => {
-  const { isLoading, authors, tenStories, error } = React.useContext(
-    AppContext
-  );
+  const {
+    isLoading,
+    authors,
+    tenStories,
+    error,
+  } = React.useContext<AppContextInterface>(AppContext);
 
   if (error) {
     return (
@@ -19,8 +28,9 @@ const StoriesList = () => {
   }
 
   const renderCards = () =>
-    tenStories.map(({ by, ...story }) =>
-      storyCard({ story: { ...story, by }, author: authors[by] })
+    tenStories.map(
+      ({ by, ...story }: { by: SingleStoryByField; story: SingleStoryEntry }) =>
+        storyCard({ story: { ...story, by }, author: authors[by] })
     );
 
   const renderLoader = () => (

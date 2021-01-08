@@ -1,4 +1,11 @@
-const OPTIONS = {
+import {
+  StoriesIds,
+  SingleStoryEntry,
+  AuthorByKeyObj,
+  SingleStoryByField,
+} from "../helpers/interfaces";
+
+const OPTIONS: RequestInit = {
   method: "GET",
   mode: "cors",
   headers: {
@@ -6,7 +13,7 @@ const OPTIONS = {
   },
 };
 
-const fetchTopStories = async () => {
+const fetchTopStories = async (): Promise<StoriesIds | []> => {
   try {
     const response = await fetch(
       "https://hacker-news.firebaseio.com/v0/topstories.json",
@@ -17,12 +24,13 @@ const fetchTopStories = async () => {
   } catch (error) {
     console.error("fetchTopStories: fatal error, dude!");
 
-    // don't do like that
     return [];
   }
 };
 
-const fetchStoriesInfo = async (storiesIds) => {
+const fetchStoriesInfo = async (
+  storiesIds: StoriesIds
+): Promise<SingleStoryEntry[]> => {
   try {
     if (!Array.isArray(storiesIds) || !storiesIds.length) {
       throw Error;
@@ -34,7 +42,9 @@ const fetchStoriesInfo = async (storiesIds) => {
 
     return Promise.all(requests)
       .then((responses) => responses)
-      .then((responses) => Promise.all(responses.map((r) => r.json())));
+      .then((responses) =>
+        Promise.all(responses.map((response) => response.json()))
+      );
   } catch (error) {
     console.error("fetchStoriesInfo: fatal error, dude!");
 
@@ -42,7 +52,9 @@ const fetchStoriesInfo = async (storiesIds) => {
   }
 };
 
-const fetchAuthorsInfo = async (authorIds) => {
+const fetchAuthorsInfo = async (
+  authorIds: SingleStoryByField[]
+): Promise<AuthorByKeyObj | {}> => {
   try {
     if (!Array.isArray(authorIds) || !authorIds.length) {
       throw Error;
